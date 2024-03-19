@@ -32,6 +32,21 @@ app.get("/api/users/:userId", (req, res) =>{
     return res.json(user);
 }); 
 
+app.post("/api/users", (req, res) =>{
+//to create a new user
+    return res.json({status:"pending"})
+});
+
+app.patch("/api/users", (req, res) =>{
+//to edit the user with id
+    return res.json({status:"pending"})
+});
+
+app.delete("/api/users", (req, res) =>{
+//to delete the user with id
+    return res.json({status:"pending"})
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
