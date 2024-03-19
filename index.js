@@ -24,6 +24,14 @@ app.get("/users", (req, res) => {
     return res.send(html);
 });
 
+
+//will return the user whose id is mentioned in the get request.
+app.get("/api/users/:userId", (req, res) =>{
+    const userId = Number(req.params.userId);
+    const user = users.find( (user) => user.id === userId);
+    return res.json(user);
+}); 
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
