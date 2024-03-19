@@ -26,10 +26,20 @@ app.get("/users", (req, res) => {
 
 
 //will return the user whose id is mentioned in the get request.
-app.get("/api/users/:userId", (req, res) =>{
+app
+.route("/api/users/:id")
+.get((req, res) =>{
     const userId = Number(req.params.userId);
     const user = users.find( (user) => user.id === userId);
     return res.json(user);
+})
+.patch((req, res) => {
+    //Edit user with the given id
+    return res.json({ status: "Pending"});
+})
+.delete((req, res)=>{
+    //Delete user with the given id
+    return res.json({ status: "Pending"});
 }); 
 
 app.post("/api/users", (req, res) =>{
@@ -37,15 +47,15 @@ app.post("/api/users", (req, res) =>{
     return res.json({status:"pending"})
 });
 
-app.patch("/api/users/:id", (req, res) =>{
-//to edit the user with id
-    return res.json({status:"pending"})
-});
+// app.patch("/api/users/:id", (req, res) =>{
+// //to edit the user with id
+//     return res.json({status:"pending"})
+// });
 
-app.delete("/api/users", (req, res) =>{
-//to delete the user with id
-    return res.json({status:"pending"})
-});
+// app.delete("/api/users/:id", (req, res) =>{
+// //to delete the user with id
+//     return res.json({status:"pending"})
+// });
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
