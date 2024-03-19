@@ -37,7 +37,7 @@ app.post("/api/users", (req, res) =>{
     return res.json({status:"pending"})
 });
 
-app.patch("/api/users", (req, res) =>{
+app.patch("/api/users/:id", (req, res) =>{
 //to edit the user with id
     return res.json({status:"pending"})
 });
