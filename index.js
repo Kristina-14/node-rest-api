@@ -1,8 +1,12 @@
 const express = require('express');
+const fs = require('fs');
 const users = require('./MOCK_DATA.json')
 
 const app = express();
 const PORT = 8000;
+
+//Middleware - Plugin
+app.use(express.urlencoded({ extended: false}));
 
 //routes
 //get the full user info in the JSON format if used for the mobile app.
@@ -24,10 +28,9 @@ app.get("/users", (req, res) => {
     return res.send(html);
 });
 
-
 //will return the user whose id is mentioned in the get request.
 app
-.route("/api/users/:id")
+.route("/api/users/:userId")
 .get((req, res) =>{
     const userId = Number(req.params.userId);
     const user = users.find( (user) => user.id === userId);
@@ -42,20 +45,23 @@ app
     return res.json({ status: "Pending"});
 }); 
 
-app.post("/api/users", (req, res) =>{
+
 //to create a new user
-    return res.json({status:"pending"})
+app.post("/api/users", (req, res) =>{
+    const body = req.body;
+/*
+using postman to test the post request
+console.log("Body:", body);
+body is carrying the new object that we are defining via postman
+We can add this to our existing database - MOCK_DATA.JSON*/
+users.push({ ...body, id: users.length+1});
+fs.writeFile('./MOCK_DATA.json', JSON.stringify(users), (err, data) =>{
+    return res.json({status: "success", id: users.length});
+}
+)
 });
 
-// app.patch("/api/users/:id", (req, res) =>{
-// //to edit the user with id
-//     return res.json({status:"pending"})
-// });
-
-// app.delete("/api/users/:id", (req, res) =>{
-// //to delete the user with id
-//     return res.json({status:"pending"})
-// });
+//using postman for testing the routes
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
